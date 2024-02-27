@@ -1,0 +1,9 @@
+- hosts: all
+  remote_user: ansible
+  become: yes
+  tasks:
+  - name: we are going to copy local file to slave
+    copy:
+      src: "./ec2.yaml"
+      dest: "/home/ansible"
+      mode: "0777"

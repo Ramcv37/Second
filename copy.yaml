@@ -1,0 +1,42 @@
+- hosts: all
+  remote_user: ansible
+  become: yes
+  tasks:
+  - name: we are going to copy local file to slave
+    copy:
+      src: "./ec2.yaml"
+      dest: "/home/ansible"
+      mode: "0777"
+
+  - name: Include the example roles
+    include_role:
+      name: myrole 
+
+  - name: Install Git and Nginx and apache2 and pip
+    apt:
+       name: "{{ item }}"
+       state: present
+    loop:
+        - git
+        - nginx
+        - apache2
+        - pip
+    tags: loop    
+
+  - name: Install Git
+    apt:
+      name: git
+      state: present
+    tags: test
+
+  - name: Install Nginx
+    apt:
+      name: nginx
+      state: present
+    tags: prod
+
+  - name: Start Nginx Service
+    service:
+      name: nginx
+      state: started
+      enabled: yes

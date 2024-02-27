@@ -1,0 +1,11 @@
+---
+- hosts: all
+  remote_user: ansible
+  become: yes
+  tasks:
+  - name: need to copy from master to slave
+    copy: 
+     src: ./ram.txt
+     dest: /home/ansible
+     mode: "0777"
+
